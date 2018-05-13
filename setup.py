@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
   name = 'export-dynamodb',
-  packages = ['export-dynamodb'],
+  packages = ['exportdynamodb'],
   version = '1.0.1',
   description = 'A cli to export Amazon DynamoDb',
   author = 'Truong Le',
@@ -22,4 +22,9 @@ setup(
           'click==6.7',
           'boto3==1.7.19'
       ],
+  entry_points = {
+        'console_scripts': [
+            'export-dynamodb = exportdynamodb.__main__:main'
+        ]
+    }
 )

@@ -3,10 +3,6 @@ export_dynamodb
 
 A cli to export dynamodb.
 
-* [Key Features](key-features)
-* [How to use](#how-to-use)
-* [Getting started](#getting-started)
-
 Key Features
 ============
 * Scan table in single or parallel thread.

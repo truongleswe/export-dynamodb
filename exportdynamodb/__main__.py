@@ -1,7 +1,7 @@
 import click
 
 @click.command()
-@click.option('--table', help='Name of table to export.')
+@click.option('--table', help='Table name.')
 def main(table):
     print('Dynamodb: {}'.format(table))
 
