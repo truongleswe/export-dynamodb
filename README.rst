@@ -1,19 +1,22 @@
 export_dynamodb
 ===============
-
 A cli to export dynamodb.
 
-Key Features
-============
+**Key Features**
 * Scan table in single or parallel thread.
 * Output file can be json or csv.
 * Get list of tables from yaml file.
 
-How to use
+How To Use
 ==========
 
-Getting started
----------------
+.. code:: bash
+
+	$ pip install export-dynamodb
+	$ export-dynamodb --help
+
+Getting Started
+===============
 
 .. code:: bash
 
@@ -27,3 +30,6 @@ Getting started
 
 	# if you want to exit from development environment, use deactivate command
 	$ deactivate
+
+	# Upload new version
+	twine upload dist/*

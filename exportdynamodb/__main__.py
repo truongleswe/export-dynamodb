@@ -1,7 +1,7 @@
 import click
 
 @click.command()
-@click.option('--table', help='Table name.')
+@click.option('--table', '-t', help='table name.')
 def main(table):
     print('Dynamodb: {}'.format(table))
 
