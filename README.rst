@@ -28,6 +28,9 @@ Getting Started
 	# Install dependencies
 	$ pip install -r requirements.txt
 
+  # test cli local
+  pip install -e .
+
 	# if you want to exit from development environment, use deactivate command
 	$ deactivate
 
