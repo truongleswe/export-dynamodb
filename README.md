@@ -31,6 +31,8 @@ pip install -e .
 # if you want to exit from development environment, use deactivate command
 $ deactivate
 
+python setup.py sdist upload -r pypi
+
 # Upload new version
 twine upload dist/*
 ```

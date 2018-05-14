@@ -1,8 +1,10 @@
 from distutils.core import setup
 
+#from setuptools import setup, find_packages
+
 setup(
   name = 'export-dynamodb',
-  packages = ['exportdynamodb'],
+  packages = ['exportdynamodb', 'exportdynamodb.entrypoints'],
   version = '1.0.2',
   description = 'A cli to export Amazon DynamoDb',
   long_description='README.md',
