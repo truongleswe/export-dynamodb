@@ -5,6 +5,8 @@ setup(
   packages = ['exportdynamodb'],
   version = '1.0.1',
   description = 'A cli to export Amazon DynamoDb',
+  long_description='README.md',
+  long_description_content_type='text/markdown',
   author = 'Truong Le',
   author_email = 'travistrle@gmail.com',
   url = 'https://github.com/travistrle/export-dynamodb.git',
