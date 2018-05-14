@@ -11,7 +11,7 @@ setup(
   author_email = 'travistrle@gmail.com',
   url = 'https://github.com/travistrle/export-dynamodb.git',
   license = 'GPLv3',
-  download_url = 'https://github.com/travistrle/export-dynamodb/archive/1.0.1.tar.gz',
+  download_url = 'https://github.com/travistrle/export-dynamodb/archive/1.0.2.tar.gz',
   keywords = ['aws', 'dynamodb', 'export'],
   classifiers = [
     'Development Status :: 3 - Alpha',
