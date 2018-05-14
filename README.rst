@@ -1,4 +1,4 @@
-export_dynamodb
+export-dynamodb
 ===============
 A cli to export dynamodb.
 
