@@ -6,7 +6,6 @@ certifi==2018.4.16
 chardet==3.0.4
 click==6.7
 docutils==0.14
--e git+git@github.com:travistrle/export-dynamodb.git@9046fd6344710894ea2f0e55ffb8859c232ed48e#egg=export_dynamodb
 idna==2.6
 isort==4.3.4
 jmespath==0.9.3
@@ -16,7 +15,6 @@ more-itertools==4.1.0
 pkginfo==1.4.2
 pluggy==0.6.0
 py==1.5.3
-pyandoc==0.2.0
 pylint==1.8.4
 pytest==3.5.1
 python-dateutil==2.7.3
