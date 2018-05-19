@@ -9,10 +9,10 @@ def readme():
 setup(
     name='export-dynamodb',
     packages=['exportdynamodb', 'exportdynamodb.entrypoints'],
-    version='1.0.4.12',
+    version='1.0.4',
     description='A cli to export Amazon DynamoDb',
     long_description=readme(),
-    long_description_content_type='text/restructuredtext',
+    long_description_content_type='text/markdown',
     author='Truong Le',
     author_email='travistrle@gmail.com',
     url='https://github.com/travistrle/export-dynamodb.git',
