@@ -50,6 +50,7 @@ def read_dynamodb_data(table):
     for item in table.attribute_definitions:
         keys.append(item['AttributeName'])
     keys_set = set(keys)
+    item_count = table.item_count
 
     raw_data = table.scan()
     if raw_data is None:
@@ -57,13 +58,27 @@ def read_dynamodb_data(table):
 
     items = raw_data['Items']
     fieldnames = set([]).union(get_keys(items))
-    print("{} records".format(raw_data['Count']))
+    cur_total = (len(items) + raw_data['Count'])
+    if cur_total > item_count:
+        percents = 99.99
+    else:
+        percents = cur_total * 100 / item_count
+
+    print("{} records ..... {:02.0f}%".format(raw_data['Count'], percents),
+          end='\r')
     while raw_data.get('LastEvaluatedKey'):
         print('Downloading ', end='')
         raw_data = table.scan(ExclusiveStartKey=raw_data['LastEvaluatedKey'])
         items.extend(raw_data['Items'])
         fieldnames = fieldnames.union(get_keys(items))
-        print("{} records".format(raw_data['Count']))
+        cur_total = (len(items) + raw_data['Count'])
+        if cur_total > item_count:
+            percents = 99.99
+        else:
+            percents = cur_total * 100 / item_count
+
+        print("{} records ..... {:02.0f}%".format(raw_data['Count'], percents),
+              end='\r')
     print("Total downloaded records: {}".format(len(items)))
 
     for fieldname in fieldnames:
