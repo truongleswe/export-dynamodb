@@ -26,11 +26,13 @@ def main(table, format, output):
             output_filename = output
         write_to_csv_file(data, output_filename)
 
+
 def get_keys(data):
     keys = set([])
     for item in data:
         keys = keys.union(set(item.keys()))
     return keys
+
 
 def read_dynamodb_data(table):
     """
@@ -41,21 +43,33 @@ def read_dynamodb_data(table):
     print('Connecting to AWS DynamoDb')
     dynamodb_resource = resource('dynamodb')
     table = dynamodb_resource.Table(table)
+
     print('Downloading ', end='')
+    keys = []
+    for item in table.attribute_definitions:
+        keys.append(item['AttributeName'])
+    keys_set = set(keys)
+
     raw_data = table.scan()
     if raw_data is None:
         return None
+
     items = raw_data['Items']
-    keys = set([]).union(get_keys(items))
+    fieldnames = set([]).union(get_keys(items))
     print("{} records".format(raw_data['Count']))
     while raw_data.get('LastEvaluatedKey'):
         print('Downloading ', end='')
         raw_data = table.scan(ExclusiveStartKey=raw_data['LastEvaluatedKey'])
         items.extend(raw_data['Items'])
-        keys = keys.union(get_keys(items))
+        fieldnames = fieldnames.union(get_keys(items))
         print("{} records".format(raw_data['Count']))
     print("Total downloaded records: {}".format(len(items)))
+
+    for fieldname in fieldnames:
+        if fieldname not in keys_set:
+            keys.append(fieldname)
     return {'items': items, 'keys': keys}
+
 
 def convert_rawdata_to_stringvalue(data):
     """
@@ -71,6 +85,7 @@ def convert_rawdata_to_stringvalue(data):
         ret.append(obj)
     return ret
 
+
 def write_to_json_file(data, filename):
     """
     Write to a json file
@@ -84,6 +99,7 @@ def write_to_json_file(data, filename):
     print("Writing to json file.")
     with open(filename, 'w') as f:
         f.write(json.dumps(convert_rawdata_to_stringvalue(data['items'])))
+
 
 def write_to_csv_file(data, filename):
     """
