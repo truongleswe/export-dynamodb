@@ -8,7 +8,7 @@ from boto3 import resource
 
 
 @click.command()
-@click.version_option(version='2.2.0')
+@click.version_option(version='2.2.1')
 @click.option('--table', '-t', help='table name.')
 @click.option('--format', '-f', help='format file [csv/json].', default='csv')
 @click.option('--output', '-o', help='output filename.', default=None)
@@ -79,6 +79,7 @@ def read_dynamodb_data(table):
 
         print("{} records ..... {:02.0f}%".format(raw_data['Count'], percents),
               end='\r')
+    print()
     print("Total downloaded records: {}".format(len(items)))
 
     for fieldname in fieldnames:
