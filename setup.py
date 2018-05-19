@@ -1,11 +1,15 @@
 from distutils.core import setup
 
+def readme():
+    with open('README.rst') as f:
+        return f.read()
+
 setup(
   name = 'export-dynamodb',
   packages = ['exportdynamodb', 'exportdynamodb.entrypoints'],
-  version = '1.0.2',
+  version = '1.0.3.5',
   description = 'A cli to export Amazon DynamoDb',
-  long_description='README.md',
+  long_description=readme(),
   long_description_content_type='text/markdown',
   author = 'Truong Le',
   author_email = 'travistrle@gmail.com',
