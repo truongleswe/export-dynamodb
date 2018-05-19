@@ -36,8 +36,6 @@ $ deactivate
 python setup.py sdist upload -r pypi
 
 # Upload new version
-$ brew install pandoc
-$ which pandoc
 $ python setup.py sdist
 $ twine upload dist/*
 ```
