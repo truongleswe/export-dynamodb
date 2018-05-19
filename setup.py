@@ -7,7 +7,7 @@ def readme():
 setup(
   name = 'export-dynamodb',
   packages = ['exportdynamodb', 'exportdynamodb.entrypoints'],
-  version = '1.0.3.5',
+  version = '1.0.4',
   description = 'A cli to export Amazon DynamoDb',
   long_description=readme(),
   long_description_content_type='text/markdown',
