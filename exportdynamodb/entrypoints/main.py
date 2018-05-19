@@ -8,7 +8,7 @@ from boto3 import resource
 
 
 @click.command()
-@click.version_option(version='2.0.0')
+@click.version_option(version='2.0.1')
 @click.option('--table', '-t', help='table name.')
 @click.option('--format', '-f', help='format file [csv/json].', default='csv')
 @click.option('--output', '-o', help='output filename.', default=None)
