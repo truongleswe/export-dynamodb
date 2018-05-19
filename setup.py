@@ -1,10 +1,13 @@
 from distutils.core import setup
 
+
 def readme():
     with open('README.rst') as f:
         return f.read()
 
+
 setup(
+<<<<<<< HEAD
   name = 'export-dynamodb',
   packages = ['exportdynamodb', 'exportdynamodb.entrypoints'],
   version = '1.0.4',
@@ -29,6 +32,32 @@ setup(
           'boto3==1.7.19'
       ],
   entry_points = {
+=======
+    name='export-dynamodb',
+    packages=['exportdynamodb', 'exportdynamodb.entrypoints'],
+    version='1.0.4.12',
+    description='A cli to export Amazon DynamoDb',
+    long_description=readme(),
+    long_description_content_type='text/restructuredtext',
+    author='Truong Le',
+    author_email='travistrle@gmail.com',
+    url='https://github.com/travistrle/export-dynamodb.git',
+    license='GPLv3',
+    download_url='https://github.com/travistrle/export-dynamodb/archive/1.0.2.tar.gz',
+    keywords=['aws', 'dynamodb', 'export'],
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: System Administrators',
+        'Topic :: Database',
+        'Programming Language :: Python :: 3.6',
+    ],
+    python_requires='>=3.6',
+    install_requires=[
+        'click==6.7',
+        'boto3==1.7.19'
+    ],
+    entry_points={
+>>>>>>> master
         'console_scripts': [
             'export-dynamodb = exportdynamodb.__main__:main'
         ]

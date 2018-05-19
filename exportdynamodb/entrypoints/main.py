@@ -41,12 +41,14 @@ def read_dynamodb_data(table):
     print('Connecting to AWS DynamoDb')
     dynamodb_resource = resource('dynamodb')
     table = dynamodb_resource.Table(table)
+
     print('Downloading ', end='')
     raw_data = table.scan()
     if raw_data is None:
         return None
     items = raw_data['Items']
     keys = set([]).union(get_keys(items))
+
     print("{} records".format(raw_data['Count']))
     while raw_data.get('LastEvaluatedKey'):
         print('Downloading ', end='')
