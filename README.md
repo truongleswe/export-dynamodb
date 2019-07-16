@@ -8,7 +8,9 @@ A cli to export dynamodb. [export-dynamodb](https://pypi.org/project/export-dyna
   * Scan table in single or parallel thread.
   * Output file can be json or csv.
   * Get list of tables from yaml file.
-
+**Assumption**
+  * credentials and regions are configured in ~/.aws/config file.
+  
 ## How To Use
 
 ```bash
