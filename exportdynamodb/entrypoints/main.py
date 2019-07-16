@@ -9,13 +9,14 @@ from boto3 import resource
 
 @click.command()
 @click.version_option(version='2.2.1')
+@click.option('--region', '-r', help='region name.')
 @click.option('--table', '-t', help='table name.')
 @click.option('--format', '-f', help='format file [csv/json].', default='csv')
 @click.option('--output', '-o', help='output filename.', default=None)
-def main(table, format, output):
+def main(table, format, output, region):
     """Export DynamoDb Table."""
     print('export dynamodb: {}'.format(table))
-    data = read_dynamodb_data(table)
+    data = read_dynamodb_data(table, region)
     if format != 'csv':
         output_filename = table + '.json'
         if output is not None:
@@ -35,14 +36,14 @@ def get_keys(data):
     return keys
 
 
-def read_dynamodb_data(table):
+def read_dynamodb_data(table, region):
     """
     Scan all item from dynamodb.
     :param table: String
     :return: Data in Dictionary Format.
     """
     print('Connecting to AWS DynamoDb')
-    dynamodb_resource = resource('dynamodb')
+    dynamodb_resource = resource('dynamodb', region_name=region)
     table = dynamodb_resource.Table(table)
 
     print('Downloading ', end='')
