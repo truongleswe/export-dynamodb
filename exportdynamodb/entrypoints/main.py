@@ -4,18 +4,19 @@ Export DynamoDb Module
 import click
 import json
 import csv
-from boto3 import resource
-
+from boto3 import Session
 
 @click.command()
 @click.version_option(version='2.2.1')
+@click.option('--profile', '-p', help='config profile name.')
 @click.option('--table', '-t', help='table name.')
 @click.option('--format', '-f', help='format file [csv/json].', default='csv')
 @click.option('--output', '-o', help='output filename.', default=None)
-def main(table, format, output):
+def main(table, format, output, profile):
     """Export DynamoDb Table."""
+    profile = profile or 'default'
     print('export dynamodb: {}'.format(table))
-    data = read_dynamodb_data(table)
+    data = read_dynamodb_data(table, profile)
     if format != 'csv':
         output_filename = table + '.json'
         if output is not None:
@@ -35,14 +36,16 @@ def get_keys(data):
     return keys
 
 
-def read_dynamodb_data(table):
+def read_dynamodb_data(table, profile):
     """
     Scan all item from dynamodb.
     :param table: String
     :return: Data in Dictionary Format.
     """
     print('Connecting to AWS DynamoDb')
-    dynamodb_resource = resource('dynamodb')
+
+    session = Session(profile_name=profile)
+    dynamodb_resource = session.resource('dynamodb')
     table = dynamodb_resource.Table(table)
 
     print('Downloading ', end='')
