@@ -76,7 +76,6 @@ def read_dynamodb_data(table, profile):
     while raw_data.get('LastEvaluatedKey'):
         print('Downloading ', end='')
         raw_data = table.scan(ExclusiveStartKey=raw_data['LastEvaluatedKey'])
-        print(raw_data)
         items.extend(raw_data['Items'])
         fieldnames = fieldnames.union(get_keys(items))
         cur_total = (len(items) + raw_data['Count'])
