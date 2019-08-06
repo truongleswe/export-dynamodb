@@ -4,6 +4,7 @@ Export DynamoDb Module
 import click
 import json
 import csv
+import decimal
 from boto3 import Session
 
 @click.command()
@@ -50,8 +51,11 @@ def read_dynamodb_data(table, profile):
 
     print('Downloading ', end='')
     keys = []
+    numeric_keys = set()
     for item in table.attribute_definitions:
         keys.append(item['AttributeName'])
+        if item['AttributeType'] == 'N':
+            numeric_keys.add(item['AttributeName'])
     keys_set = set(keys)
     item_count = table.item_count
 
@@ -72,6 +76,7 @@ def read_dynamodb_data(table, profile):
     while raw_data.get('LastEvaluatedKey'):
         print('Downloading ', end='')
         raw_data = table.scan(ExclusiveStartKey=raw_data['LastEvaluatedKey'])
+        print(raw_data)
         items.extend(raw_data['Items'])
         fieldnames = fieldnames.union(get_keys(items))
         cur_total = (len(items) + raw_data['Count'])
@@ -88,7 +93,8 @@ def read_dynamodb_data(table, profile):
     for fieldname in fieldnames:
         if fieldname not in keys_set:
             keys.append(fieldname)
-    return {'items': items, 'keys': keys}
+    data = {'items': items, 'keys': keys}
+    return converted_by_type(data, numeric_keys)
 
 
 def convert_rawdata_to_stringvalue(data):
@@ -118,7 +124,7 @@ def write_to_json_file(data, filename):
 
     print("Writing to json file.")
     with open(filename, 'w') as f:
-        f.write(json.dumps(convert_rawdata_to_stringvalue(data['items'])))
+        json.dump(data['items'], f, cls=DecimalEncoder)
 
 
 def write_to_csv_file(data, filename):
@@ -137,3 +143,17 @@ def write_to_csv_file(data, filename):
                                 quotechar='"')
         writer.writeheader()
         writer.writerows(data['items'])
+
+def converted_by_type(data, numeric_keys):
+    for i, row in enumerate(data['items']):
+        for element in row:
+            if element in numeric_keys:
+                data['items'][i][element] = int(row[element])
+    return data
+
+# From https://stackoverflow.com/a/3885198
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            return float(o)
+        return super(DecimalEncoder, self).default(o)
