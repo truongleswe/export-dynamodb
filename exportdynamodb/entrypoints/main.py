@@ -12,7 +12,9 @@ from boto3 import Session
 @click.option('--table', '-t', help='table name.')
 @click.option('--format', '-f', help='format file [csv/json].', default='csv')
 @click.option('--output', '-o', help='output filename.', default=None)
-def main(table, format, output, profile):
+@click.option('--csv_delimiter', '-d', help='delimiter, for csv format', default=',')
+@click.option('--csv_quotechar', '-q', help='quotechar, for csv format', default='"')
+def main(table, format, output, profile, csv_delimiter, csv_quotechar):
     """Export DynamoDb Table."""
     profile = profile or 'default'
     print('export dynamodb: {}'.format(table))
@@ -26,7 +28,7 @@ def main(table, format, output, profile):
         output_filename = table + '.csv'
         if output is not None:
             output_filename = output
-        write_to_csv_file(data, output_filename)
+        write_to_csv_file(data, output_filename, csv_delimiter, csv_quotechar)
 
 
 def get_keys(data):
@@ -121,7 +123,7 @@ def write_to_json_file(data, filename):
         f.write(json.dumps(convert_rawdata_to_stringvalue(data['items'])))
 
 
-def write_to_csv_file(data, filename):
+def write_to_csv_file(data, filename, csv_delimiter, csv_quotechar):
     """
     Write to a csv file.
     :param data:
@@ -133,7 +135,8 @@ def write_to_csv_file(data, filename):
 
     print("Writing to csv file.")
     with open(filename, 'w') as csvfile:
-        writer = csv.DictWriter(csvfile, delimiter=',', fieldnames=data['keys'],
-                                quotechar='"')
+        writer = csv.DictWriter(csvfile, delimiter=csv_delimiter, 
+            fieldnames=data['keys'], quotechar=csv_quotechar)
+
         writer.writeheader()
         writer.writerows(data['items'])
