@@ -25,6 +25,6 @@ six==1.11.0
 tox==3.0.0
 tqdm==4.23.3
 twine==1.11.0
-urllib3==1.22
+urllib3==1.24.2
 virtualenv==15.2.0
 wrapt==1.10.11
